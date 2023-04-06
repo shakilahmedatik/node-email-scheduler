@@ -1,7 +1,7 @@
-import userModel from '../models/userModel'
+const userModel = require('../models/userModel')
 
 // Add an user in the database.
-export const addUser = async (req, res) => {
+exports.addUser = async (req, res) => {
   const email = req.body
 
   const newUser = new userModel(req.body)

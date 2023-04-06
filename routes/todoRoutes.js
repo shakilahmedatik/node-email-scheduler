@@ -1,11 +1,11 @@
-import express from 'express'
-import {
+const express = require('express')
+const {
   allTodo,
   addTodo,
   updateTodo,
   deleteTodo,
   singleTodo,
-} from '../controllers/todoController'
+} = require('../controllers/todoController')
 
 const router = express.Router()
 

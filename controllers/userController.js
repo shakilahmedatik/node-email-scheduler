@@ -1,4 +1,4 @@
-const userModel = require('../models/userModel')
+const { userModel } = require('../models/userModel')
 
 // Add an user in the database.
 exports.addUser = async (req, res) => {

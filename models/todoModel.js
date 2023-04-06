@@ -23,4 +23,4 @@ const todoSchema = Schema(
   { timestamps: true }
 )
 
-exports.TodoModel = mongoose.model('Todos', todoSchema)
+exports.todoModel = mongoose.model('Todos', todoSchema)

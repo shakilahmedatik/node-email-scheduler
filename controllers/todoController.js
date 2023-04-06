@@ -1,4 +1,4 @@
-const { TodoModel } = require('../models/TodoModel')
+const { todoModel } = require('../models/todoModel')
 const { sendEmail } = require('../utils/email')
 
 // Get all the todo from database
@@ -6,7 +6,7 @@ exports.allTodo = async (req, res) => {
   const email = req.query.email
   if (email) {
     try {
-      const todos = await TodoModel.find({ user: email })
+      const todos = await todoModel.find({ user: email })
       res.send(todos)
     } catch (error) {
       console.log(error)
@@ -20,7 +20,7 @@ exports.singleTodo = async (req, res) => {
   const id = req.params.id
   const query = { _id: id }
   try {
-    const todo = await TodoModel.findOne(query)
+    const todo = await todoModel.findOne(query)
     res.send(todo)
   } catch (error) {
     console.log(error)
@@ -30,7 +30,7 @@ exports.singleTodo = async (req, res) => {
 
 // Add a todo in the database.
 exports.addTodo = async (req, res) => {
-  const newTodo = new TodoModel(req.body)
+  const newTodo = new todoModel(req.body)
 
   // save todo in the db
   newTodo
@@ -44,13 +44,15 @@ exports.addTodo = async (req, res) => {
 // Edit an todo in the database.
 exports.updateTodo = async (req, res) => {
   const id = req.params.id
-  const todo = await TodoModel.findOne({ _id: id }).exec()
+  const todo = await todoModel.findOne({ _id: id }).exec()
 
   if (todo) {
     try {
-      const updated = await TodoModel.findOneAndUpdate({ _id: id }, req.body, {
-        new: true,
-      }).exec()
+      const updated = await todoModel
+        .findOneAndUpdate({ _id: id }, req.body, {
+          new: true,
+        })
+        .exec()
 
       sendEmail(updated.user, {
         title: `Hello ${updated.user.split('@')[0]}`,
@@ -67,11 +69,11 @@ exports.updateTodo = async (req, res) => {
 // Delete an todo in the database.
 exports.deleteTodo = async (req, res) => {
   const id = req.params.id
-  const todo = await TodoModel.findOne({ _id: id }).exec()
+  const todo = await todoModel.findOne({ _id: id }).exec()
   console.log(todo)
   if (todo) {
     try {
-      await TodoModel.findOneAndDelete({ _id: id }).exec()
+      await todoModel.findOneAndDelete({ _id: id }).exec()
       sendEmail(todo.user, {
         title: `Hello ${todo.user.split('@')[0]}`,
         subject: `Todo Delete Successful.`,

@@ -35,9 +35,7 @@ exports.addTodo = async (req, res) => {
   // save todo in the db
   newTodo
     .save()
-    .then(data =>
-      res.status(200).message({ message: 'todo Added Successfully!' })
-    )
+    .then(data => res.status(200).json({ message: 'todo Added Successfully!' }))
     .catch(error => res.status(400).json(error))
 }
 
